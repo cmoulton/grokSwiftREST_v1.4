@@ -19,9 +19,9 @@ struct Gist: Codable {
     }
   }
 
-  var id: String
+  var id: String?
   var gistDescription: String?
-  var url: String
+  var url: URL?
   var owner: Owner?
 }
 
