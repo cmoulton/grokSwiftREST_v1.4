@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A359237925D85AB2A8F08EA2 /* Pods_grokSwiftREST.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13A7EDB3A000D9F2E020FCEB /* Pods_grokSwiftREST.framework */; };
 		CF85010B2064367A007315FA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF85010A2064367A007315FA /* AppDelegate.swift */; };
 		CF85010D2064367A007315FA /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF85010C2064367A007315FA /* MasterViewController.swift */; };
 		CF85010F2064367A007315FA /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF85010E2064367A007315FA /* DetailViewController.swift */; };
@@ -16,6 +17,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		13A7EDB3A000D9F2E020FCEB /* Pods_grokSwiftREST.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_grokSwiftREST.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7B9B63B3899C91CD7015003C /* Pods-grokSwiftREST.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-grokSwiftREST.release.xcconfig"; path = "Pods/Target Support Files/Pods-grokSwiftREST/Pods-grokSwiftREST.release.xcconfig"; sourceTree = "<group>"; };
+		9934D4F6ECBEA4FA6B276A83 /* Pods-grokSwiftREST.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-grokSwiftREST.debug.xcconfig"; path = "Pods/Target Support Files/Pods-grokSwiftREST/Pods-grokSwiftREST.debug.xcconfig"; sourceTree = "<group>"; };
 		CF8501072064367A007315FA /* grokSwiftREST.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = grokSwiftREST.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF85010A2064367A007315FA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CF85010C2064367A007315FA /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
@@ -31,17 +35,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A359237925D85AB2A8F08EA2 /* Pods_grokSwiftREST.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CE614D3D6F46324C438096F3 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				9934D4F6ECBEA4FA6B276A83 /* Pods-grokSwiftREST.debug.xcconfig */,
+				7B9B63B3899C91CD7015003C /* Pods-grokSwiftREST.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		CF8500FE2064367A007315FA = {
 			isa = PBXGroup;
 			children = (
 				CF8501092064367A007315FA /* grokSwiftREST */,
 				CF8501082064367A007315FA /* Products */,
+				CE614D3D6F46324C438096F3 /* Pods */,
+				FEFD1C3CF180E926EEBFF906 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -67,6 +83,14 @@
 			path = grokSwiftREST;
 			sourceTree = "<group>";
 		};
+		FEFD1C3CF180E926EEBFF906 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				13A7EDB3A000D9F2E020FCEB /* Pods_grokSwiftREST.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -74,9 +98,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CF85011B2064367A007315FA /* Build configuration list for PBXNativeTarget "grokSwiftREST" */;
 			buildPhases = (
+				87F15CD3D1C5B0538414D66C /* [CP] Check Pods Manifest.lock */,
 				CF8501032064367A007315FA /* Sources */,
 				CF8501042064367A007315FA /* Frameworks */,
 				CF8501052064367A007315FA /* Resources */,
+				FA23838EB403631CD71CE27A /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -133,6 +159,45 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		87F15CD3D1C5B0538414D66C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-grokSwiftREST-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FA23838EB403631CD71CE27A /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-grokSwiftREST/Pods-grokSwiftREST-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-grokSwiftREST/Pods-grokSwiftREST-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		CF8501032064367A007315FA /* Sources */ = {
@@ -276,6 +341,7 @@
 		};
 		CF85011C2064367A007315FA /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9934D4F6ECBEA4FA6B276A83 /* Pods-grokSwiftREST.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -291,6 +357,7 @@
 		};
 		CF85011D2064367A007315FA /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7B9B63B3899C91CD7015003C /* Pods-grokSwiftREST.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
