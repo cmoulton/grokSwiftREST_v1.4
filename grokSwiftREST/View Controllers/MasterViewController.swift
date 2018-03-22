@@ -38,23 +38,21 @@ class MasterViewController: UITableViewController {
   }
 
   func loadGists() {
-    let cmoulton = Gist.Owner(login: "cmoulton", avatarURL: URL(string: "https://grokswift.com//a_test_avatar_url"))
-    let gist1 = Gist(id: "1",
-                     gistDescription: "The first gist",
-                     url: nil,
-                     owner: cmoulton)
-    let gist2 = Gist(id: "2",
-                     gistDescription: "The second gist",
-                     url: nil,
-                     owner: cmoulton)
-    let gist3 = Gist(id: "3",
-                     gistDescription: "The third gist",
-                     url: nil,
-                     owner: cmoulton)
-    gists = [gist1, gist2, gist3]
+    GitHubAPIManager.shared.fetchPublicGists() {
+      result in
+      guard result.error == nil else {
+        self.handleLoadGistsError(result.error!)
+        return
+      }
+      if let fetchedGists = result.value {
+        self.gists = fetchedGists
+      }
+      self.tableView.reloadData()
+    }
+  }
 
-    // Tell the table view to reload
-    self.tableView.reloadData()
+  func handleLoadGistsError(_ error: Error) {
+    // TODO: show error
   }
 
   @objc

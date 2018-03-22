@@ -23,5 +23,12 @@ struct Gist: Codable {
   var gistDescription: String?
   var url: URL?
   var owner: Owner?
+
+  enum CodingKeys: String, CodingKey {
+    case id
+    case gistDescription = "description"
+    case url
+    case owner
+  }
 }
 

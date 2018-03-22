@@ -15,8 +15,10 @@
 		CF8501142064367A007315FA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CF8501132064367A007315FA /* Assets.xcassets */; };
 		CF8501172064367A007315FA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CF8501152064367A007315FA /* LaunchScreen.storyboard */; };
 		CF85012620643B8B007315FA /* Gist.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF85012520643B8B007315FA /* Gist.swift */; };
-		CFCF1FB520BEE37D00A0775C /* GistRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFCF1FB420BEE37D00A0775C /* GistRouter.swift */; };
-		CFCF1FB720BEE39600A0775C /* GitHubAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFCF1FB620BEE39600A0775C /* GitHubAPIManager.swift */; };
+		CF850128206442AD007315FA /* JSONEncoder+EncodeResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF850127206442AD007315FA /* JSONEncoder+EncodeResponse.swift */; };
+		CF85012A2064433B007315FA /* BackendError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8501292064433B007315FA /* BackendError.swift */; };
+		CFE5610F20BEE4AB005AD0E5 /* GistRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFE5610D20BEE4AA005AD0E5 /* GistRouter.swift */; };
+		CFE5611020BEE4AB005AD0E5 /* GitHubAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFE5610E20BEE4AA005AD0E5 /* GitHubAPIManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,8 +34,10 @@
 		CF8501162064367A007315FA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CF8501182064367A007315FA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CF85012520643B8B007315FA /* Gist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gist.swift; sourceTree = "<group>"; };
-		CFCF1FB420BEE37D00A0775C /* GistRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GistRouter.swift; sourceTree = "<group>"; };
-		CFCF1FB620BEE39600A0775C /* GitHubAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubAPIManager.swift; sourceTree = "<group>"; };
+		CF850127206442AD007315FA /* JSONEncoder+EncodeResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JSONEncoder+EncodeResponse.swift"; sourceTree = "<group>"; };
+		CF8501292064433B007315FA /* BackendError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackendError.swift; sourceTree = "<group>"; };
+		CFE5610D20BEE4AA005AD0E5 /* GistRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GistRouter.swift; sourceTree = "<group>"; };
+		CFE5610E20BEE4AA005AD0E5 /* GitHubAPIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHubAPIManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,8 +106,10 @@
 		CF85012120643AEB007315FA /* Networking */ = {
 			isa = PBXGroup;
 			children = (
-				CFCF1FB420BEE37D00A0775C /* GistRouter.swift */,
-				CFCF1FB620BEE39600A0775C /* GitHubAPIManager.swift */,
+				CF850127206442AD007315FA /* JSONEncoder+EncodeResponse.swift */,
+				CF8501292064433B007315FA /* BackendError.swift */,
+				CFE5610D20BEE4AA005AD0E5 /* GistRouter.swift */,
+				CFE5610E20BEE4AA005AD0E5 /* GitHubAPIManager.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -237,12 +243,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CFE5610F20BEE4AB005AD0E5 /* GistRouter.swift in Sources */,
+				CFE5611020BEE4AB005AD0E5 /* GitHubAPIManager.swift in Sources */,
 				CF85010F2064367A007315FA /* DetailViewController.swift in Sources */,
 				CF85012620643B8B007315FA /* Gist.swift in Sources */,
 				CF85010D2064367A007315FA /* MasterViewController.swift in Sources */,
-				CFCF1FB520BEE37D00A0775C /* GistRouter.swift in Sources */,
+				CF850128206442AD007315FA /* JSONEncoder+EncodeResponse.swift in Sources */,
 				CF85010B2064367A007315FA /* AppDelegate.swift in Sources */,
-				CFCF1FB720BEE39600A0775C /* GitHubAPIManager.swift in Sources */,
+				CF85012A2064433B007315FA /* BackendError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
