@@ -47,14 +47,6 @@ enum GistRouter: URLRequestConvertible {
     var urlRequest = URLRequest(url: url)
     urlRequest.httpMethod = method.rawValue
 
-    let username = "myUsername"
-    let password = "myPassword"
-
-    if let credentialData = "\(username):\(password)".data(using: String.Encoding.utf8) {
-      let base64Credentials = credentialData.base64EncodedString()
-      urlRequest.setValue("Basic \(base64Credentials)", forHTTPHeaderField: "Authorization")
-    }
-
     return urlRequest
   }
 }
