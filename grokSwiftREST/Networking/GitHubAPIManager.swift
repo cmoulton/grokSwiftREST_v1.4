@@ -12,6 +12,18 @@ import Alamofire
 class GitHubAPIManager {
   static let shared = GitHubAPIManager()
 
+  // MARK: - Basic Auth
+  func printMyStarredGistsWithBasicAuth() {
+    Alamofire.request(GistRouter.getMyStarred())
+      .responseString { response in
+        guard let receivedString = response.result.value else {
+          print("didn't get a string in the response")
+          return
+        }
+        print(receivedString)
+    }
+  }
+
   func clearCache() {
     let cache = URLCache.shared
     cache.removeAllCachedResponses()
