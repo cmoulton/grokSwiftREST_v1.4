@@ -13,7 +13,9 @@ class MasterViewController: UITableViewController {
   
   var detailViewController: DetailViewController? = nil
   var gists = [Gist]()
-
+  var nextPageURLString: String?
+  var isLoading = false
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     // Do any additional setup after loading the view, typically from a nib.
@@ -34,12 +36,16 @@ class MasterViewController: UITableViewController {
   
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
-    loadGists()
+    loadGists(urlToLoad: nil)
   }
   
-  func loadGists() {
-    GitHubAPIManager.shared.fetchPublicGists() {
-      result in
+  func loadGists(urlToLoad: String?) {
+    self.isLoading = true
+    GitHubAPIManager.shared.fetchPublicGists(pageToLoad: urlToLoad) {
+      (result, nextPage) in
+      self.isLoading = false
+      self.nextPageURLString = nextPage
+
       guard result.error == nil else {
         self.handleLoadGistsError(result.error!)
         return
@@ -108,6 +114,18 @@ class MasterViewController: UITableViewController {
       }
     } else {
       cell.imageView?.image = UIImage(named: "placeholder.png")
+    }
+
+    if !isLoading {
+      let rowsLoaded = gists.count
+      let rowsRemaining = rowsLoaded - indexPath.row
+      let rowsToLoadFromBottom = 5
+
+      if rowsRemaining <= rowsToLoadFromBottom {
+        if let nextPage = nextPageURLString {
+          self.loadGists(urlToLoad: nextPage)
+        }
+      }
     }
 
     return cell

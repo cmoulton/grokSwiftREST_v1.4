@@ -13,11 +13,12 @@ enum GistRouter: URLRequestConvertible {
   static let baseURLString = "https://api.github.com/"
 
   case getPublic()
+  case getAtPath(String)
 
   func asURLRequest() throws -> URLRequest {
     var method: HTTPMethod {
       switch self {
-      case .getPublic:
+      case .getAtPath, .getPublic:
         return .get
 
       }
@@ -26,6 +27,9 @@ enum GistRouter: URLRequestConvertible {
     let url: URL = {
       let relativePath: String
       switch self {
+      case .getAtPath(let path):
+        // already have the full URL, so just return it
+        return URL(string: path)!
       case .getPublic():
         relativePath = "gists/public"
       }
