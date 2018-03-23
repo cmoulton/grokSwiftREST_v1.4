@@ -12,6 +12,11 @@ import Alamofire
 class GitHubAPIManager {
   static let shared = GitHubAPIManager()
 
+  func clearCache() {
+    let cache = URLCache.shared
+    cache.removeAllCachedResponses()
+  }
+
   func imageFrom(url: URL,
                  completionHandler: @escaping (UIImage?, Error?) -> Void) {
     Alamofire.request(url)

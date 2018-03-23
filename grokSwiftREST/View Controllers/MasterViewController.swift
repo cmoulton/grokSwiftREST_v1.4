@@ -15,6 +15,7 @@ class MasterViewController: UITableViewController {
   var gists = [Gist]()
   var nextPageURLString: String?
   var isLoading = false
+  var dateFormatter = DateFormatter()
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -31,6 +32,17 @@ class MasterViewController: UITableViewController {
   
   override func viewWillAppear(_ animated: Bool) {
     clearsSelectionOnViewWillAppear = splitViewController!.isCollapsed
+
+    // add refresh control for pull to refresh
+    if (self.refreshControl == nil) {
+      self.refreshControl = UIRefreshControl()
+      self.refreshControl?.addTarget(self,
+                                     action: #selector(refresh(sender:)),
+                                     for: .valueChanged)
+      self.dateFormatter.dateStyle = .short
+      self.dateFormatter.timeStyle = .long
+    }
+
     super.viewWillAppear(animated)
   }
   
@@ -46,19 +58,38 @@ class MasterViewController: UITableViewController {
       self.isLoading = false
       self.nextPageURLString = nextPage
 
+      // tell refresh control it can stop showing up now
+      if self.refreshControl != nil,
+        self.refreshControl!.isRefreshing {
+        self.refreshControl?.endRefreshing()
+      }
+
       guard result.error == nil else {
         self.handleLoadGistsError(result.error!)
         return
       }
+
       if let fetchedGists = result.value {
-        self.gists = fetchedGists
+        if urlToLoad == nil {
+          // empty out the gists because we're not loading another page
+          self.gists = []
+        }
+
+        self.gists += fetchedGists
       }
+
+      // update "last updated" title for refresh control
+      let now = Date()
+      let updateString = "Last Updated at " + self.dateFormatter.string(from: now)
+      self.refreshControl?.attributedTitle = NSAttributedString(string: updateString)
+
       self.tableView.reloadData()
     }
   }
   
   func handleLoadGistsError(_ error: Error) {
     // TODO: show error
+    print(error)
   }
   
   @objc
@@ -143,5 +174,12 @@ class MasterViewController: UITableViewController {
     } else if editingStyle == .insert {
       // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
     }
+  }
+
+  // MARK: - Pull to Refresh
+  @objc func refresh(sender: Any) {
+    nextPageURLString = nil // so it doesn't try to append the results
+    GitHubAPIManager.shared.clearCache()
+    loadGists(urlToLoad: nil)
   }
 }
