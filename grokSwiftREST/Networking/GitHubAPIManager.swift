@@ -12,6 +12,20 @@ import Alamofire
 class GitHubAPIManager {
   static let shared = GitHubAPIManager()
 
+  func imageFrom(url: URL,
+                 completionHandler: @escaping (UIImage?, Error?) -> Void) {
+    Alamofire.request(url)
+      .responseData { response in
+        guard let data = response.data else {
+          completionHandler(nil, response.error)
+          return
+        }
+
+        let image = UIImage(data: data)
+        completionHandler(image, nil)
+    }
+  }
+
   func printPublicGists() {
     Alamofire.request(GistRouter.getPublic())
       .responseString { response in
