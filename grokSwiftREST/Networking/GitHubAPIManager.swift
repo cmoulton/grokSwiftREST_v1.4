@@ -24,6 +24,38 @@ class GitHubAPIManager {
     }
   }
 
+  func doGetWithBasicAuth() {
+    let username = "myUsername"
+    let password = "myPassword"
+    Alamofire.request("https://httpbin.org/basic-auth/\(username)/\(password)")
+      .authenticate(user: username, password: password)
+      .responseString { response in
+        if let receivedString = response.result.value {
+          print(receivedString)
+        } else if let error = response.result.error {
+          print(error)
+        }
+    }
+  }
+
+  func doGetWithBasicAuthCredential() {
+    let username = "myUsername"
+    let password = "myPassword"
+
+    let credential = URLCredential(user: username, password: password,
+                                   persistence: .forSession)
+
+    Alamofire.request("https://httpbin.org/basic-auth/\(username)/\(password)")
+      .authenticate(usingCredential: credential)
+      .responseString { response in
+        if let receivedString = response.result.value {
+          print(receivedString)
+        } else if let error = response.result.error {
+          print(error)
+        }
+    }
+  }
+
   func clearCache() {
     let cache = URLCache.shared
     cache.removeAllCachedResponses()
