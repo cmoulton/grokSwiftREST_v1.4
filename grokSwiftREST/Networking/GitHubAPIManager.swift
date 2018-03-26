@@ -193,6 +193,7 @@ class GitHubAPIManager {
         }
 
         let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
         let result: Result<[Gist]> = decoder.decodeResponse(from: response)
         let next = self.parseNextPageFromHeaders(response: response.response)
         completionHandler(result, next)

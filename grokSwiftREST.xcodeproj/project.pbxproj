@@ -21,6 +21,7 @@
 		CFE5611020BEE4AB005AD0E5 /* GitHubAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFE5610E20BEE4AA005AD0E5 /* GitHubAPIManager.swift */; };
 		CF85014A206938C6007315FA /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF850149206938C6007315FA /* LoginViewController.swift */; };
 		CF85014C20693B7F007315FA /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF85014B20693B7F007315FA /* SafariServices.framework */; };
+		CF85014E2069947E007315FA /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF85014D2069947E007315FA /* File.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		CFE5610E20BEE4AA005AD0E5 /* GitHubAPIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHubAPIManager.swift; sourceTree = "<group>"; };
 		CF850149206938C6007315FA /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		CF85014B20693B7F007315FA /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
+		CF85014D2069947E007315FA /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +126,7 @@
 			isa = PBXGroup;
 			children = (
 				CF85012520643B8B007315FA /* Gist.swift */,
+				CF85014D2069947E007315FA /* File.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -264,6 +267,8 @@
 				CF85010F2064367A007315FA /* DetailViewController.swift in Sources */,
 				CF85012620643B8B007315FA /* Gist.swift in Sources */,
 				CF85010D2064367A007315FA /* MasterViewController.swift in Sources */,
+				CF85014E2069947E007315FA /* File.swift in Sources */,
+				CF85012320643AF7007315FA /* GistRouter.swift in Sources */,
 				CF850128206442AD007315FA /* JSONEncoder+EncodeResponse.swift in Sources */,
 				CF85010B2064367A007315FA /* AppDelegate.swift in Sources */,
 				CF85012A2064433B007315FA /* BackendError.swift in Sources */,
