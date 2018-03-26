@@ -9,6 +9,7 @@
 import UIKit
 import PINRemoteImage
 import SafariServices
+import Alamofire
 
 class MasterViewController: UITableViewController, LoginViewDelegate, SFSafariViewControllerDelegate {
   
@@ -18,6 +19,8 @@ class MasterViewController: UITableViewController, LoginViewDelegate, SFSafariVi
   var isLoading = false
   var dateFormatter = DateFormatter()
   var safariViewController: SFSafariViewController?
+
+  @IBOutlet weak var gistSegmentedControl: UISegmentedControl!
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -53,6 +56,12 @@ class MasterViewController: UITableViewController, LoginViewDelegate, SFSafariVi
     if (!GitHubAPIManager.shared.isLoadingOAuthToken) {
       loadInitialData()
     }
+  }
+
+  @IBAction func segmentedControlValueChanged(sender: UISegmentedControl) {
+    gists = []
+    tableView.reloadData()
+    loadGists(urlToLoad: nil)
   }
 
   func loadInitialData() {
@@ -118,7 +127,7 @@ class MasterViewController: UITableViewController, LoginViewDelegate, SFSafariVi
   
   func loadGists(urlToLoad: String?) {
     self.isLoading = true
-    GitHubAPIManager.shared.fetchMyStarredGists(pageToLoad: urlToLoad) {
+    let completionHandler: (Result<[Gist]>, String?) -> Void = {
       (result, nextPage) in
       self.isLoading = false
       self.nextPageURLString = nextPage
@@ -149,6 +158,20 @@ class MasterViewController: UITableViewController, LoginViewDelegate, SFSafariVi
       self.refreshControl?.attributedTitle = NSAttributedString(string: updateString)
 
       self.tableView.reloadData()
+    }
+
+    switch gistSegmentedControl.selectedSegmentIndex {
+    case 0:
+      GitHubAPIManager.shared.fetchPublicGists(pageToLoad: urlToLoad,
+                                               completionHandler: completionHandler)
+    case 1:
+      GitHubAPIManager.shared.fetchMyStarredGists(pageToLoad: urlToLoad,
+                                                  completionHandler: completionHandler)
+    case 2:
+      GitHubAPIManager.shared.fetchMyGists(pageToLoad: urlToLoad,
+                                           completionHandler: completionHandler)
+    default:
+      print("got an index that I didn't expect for selectedSegmentIndex")
     }
   }
   
