@@ -56,11 +56,26 @@ class MasterViewController: UITableViewController, LoginViewDelegate, SFSafariVi
   }
 
   func loadInitialData() {
+    isLoading = true
+    GitHubAPIManager.shared.OAuthTokenCompletionHandler = { error in
+      guard error == nil else {
+        print(error!)
+        self.isLoading = false
+        // TODO: handle error
+        // Something went wrong, try again
+        self.showOAuthLoginView()
+        return
+      }
+      if let _ = self.safariViewController {
+        self.dismiss(animated: false) {}
+      }
+      self.loadGists(urlToLoad: nil)
+    }
     if (!GitHubAPIManager.shared.hasOAuthToken()) {
       showOAuthLoginView()
       return
     }
-    GitHubAPIManager.shared.printMyStarredGistsWithOAuth2()
+    loadGists(urlToLoad: nil)
   }
 
   func showOAuthLoginView() {
@@ -78,6 +93,9 @@ class MasterViewController: UITableViewController, LoginViewDelegate, SFSafariVi
   func didTapLoginButton() {
     self.dismiss(animated: false) {
       guard let authURL = GitHubAPIManager.shared.URLToStartOAuth2Login() else {
+        let error = BackendError.authCouldNot(reason:
+          "Could not obtain an OAuth token")
+        GitHubAPIManager.shared.OAuthTokenCompletionHandler?(error)
         return
       }
       self.safariViewController = SFSafariViewController(url: authURL)
@@ -100,7 +118,7 @@ class MasterViewController: UITableViewController, LoginViewDelegate, SFSafariVi
   
   func loadGists(urlToLoad: String?) {
     self.isLoading = true
-    GitHubAPIManager.shared.fetchPublicGists(pageToLoad: urlToLoad) {
+    GitHubAPIManager.shared.fetchMyStarredGists(pageToLoad: urlToLoad) {
       (result, nextPage) in
       self.isLoading = false
       self.nextPageURLString = nextPage
@@ -135,8 +153,17 @@ class MasterViewController: UITableViewController, LoginViewDelegate, SFSafariVi
   }
   
   func handleLoadGistsError(_ error: Error) {
-    // TODO: show error
     print(error)
+    nextPageURLString = nil
+    isLoading = false
+
+    switch error {
+    case BackendError.authLost:
+      self.showOAuthLoginView()
+      return
+    default:
+      break
+    }
   }
   
   @objc
@@ -228,6 +255,6 @@ class MasterViewController: UITableViewController, LoginViewDelegate, SFSafariVi
     GitHubAPIManager.shared.isLoadingOAuthToken = false
     nextPageURLString = nil // so it doesn't try to append the results
     GitHubAPIManager.shared.clearCache()
-    loadGists(urlToLoad: nil)
+    loadInitialData()
   }
 }

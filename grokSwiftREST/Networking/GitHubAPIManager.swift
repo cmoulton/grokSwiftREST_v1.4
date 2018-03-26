@@ -31,6 +31,7 @@ class GitHubAPIManager {
     }
   }
   var isLoadingOAuthToken: Bool = false
+  var OAuthTokenCompletionHandler:((Error?) -> Void)?
 
   let clientID: String = "1234567890"
   let clientSecret: String = "abcdefghijkl"
@@ -40,6 +41,14 @@ class GitHubAPIManager {
       return !token.isEmpty
     }
     return false
+  }
+
+  func checkUnauthorized(urlResponse: HTTPURLResponse) -> (Error?) {
+    if (urlResponse.statusCode == 401) {
+      self.OAuthToken = nil
+      return BackendError.authLost(reason: "Not Logged In")
+    }
+    return nil
   }
 
   // MARK: - OAuth flow
@@ -54,6 +63,9 @@ class GitHubAPIManager {
     // extract the code from the URL
     guard let code = extractCodeFromOAuthStep1Response(url) else {
       isLoadingOAuthToken = false
+      let error = BackendError.authCouldNot(reason:
+        "Could not obtain an OAuth token")
+      OAuthTokenCompletionHandler?(error)
       return
     }
     swapAuthCodeForToken(code: code)
@@ -101,11 +113,12 @@ class GitHubAPIManager {
 
         self.OAuthToken = self.parseOAuthTokenResponse(jsonResult)
         self.isLoadingOAuthToken = false
-        guard self.hasOAuthToken() else {
-          return
+        if self.hasOAuthToken() {
+          self.OAuthTokenCompletionHandler?(nil)
+        } else  {
+          let error = BackendError.authCouldNot(reason: "Could not obtain an OAuth token")
+          self.OAuthTokenCompletionHandler?(error)
         }
-        // TEST: use token to fetch starred gists
-        self.printMyStarredGistsWithOAuth2()
     }
   }
 
@@ -173,6 +186,12 @@ class GitHubAPIManager {
                   completionHandler: @escaping (Result<[Gist]>, String?) -> Void) {
     Alamofire.request(urlRequest)
       .responseData { response in
+        if let urlResponse = response.response,
+          let authError = self.checkUnauthorized(urlResponse: urlResponse) {
+          completionHandler(.failure(authError), nil)
+          return
+        }
+
         let decoder = JSONDecoder()
         let result: Result<[Gist]> = decoder.decodeResponse(from: response)
         let next = self.parseNextPageFromHeaders(response: response.response)
