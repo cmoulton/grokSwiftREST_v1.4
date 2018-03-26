@@ -11,6 +11,21 @@ import Alamofire
 
 class GitHubAPIManager {
   static let shared = GitHubAPIManager()
+  let clientID: String = "1234567890"
+  let clientSecret: String = "abcdefghijkl"
+
+  func hasOAuthToken() -> Bool {
+    // TODO: implement
+    return false
+  }
+
+  // MARK: - OAuth flow
+
+  func URLToStartOAuth2Login() -> URL? {
+    let authPath: String = "https://github.com/login/oauth/authorize" +
+    "?client_id=\(clientID)&scope=gist&state=TEST_STATE"
+    return URL(string: authPath)
+  }
 
   func clearCache() {
     let cache = URLCache.shared
