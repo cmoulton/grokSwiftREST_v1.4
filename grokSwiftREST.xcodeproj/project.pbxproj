@@ -19,6 +19,8 @@
 		CF85012A2064433B007315FA /* BackendError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8501292064433B007315FA /* BackendError.swift */; };
 		CFE5610F20BEE4AB005AD0E5 /* GistRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFE5610D20BEE4AA005AD0E5 /* GistRouter.swift */; };
 		CFE5611020BEE4AB005AD0E5 /* GitHubAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFE5610E20BEE4AA005AD0E5 /* GitHubAPIManager.swift */; };
+		CF85014A206938C6007315FA /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF850149206938C6007315FA /* LoginViewController.swift */; };
+		CF85014C20693B7F007315FA /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF85014B20693B7F007315FA /* SafariServices.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +40,8 @@
 		CF8501292064433B007315FA /* BackendError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackendError.swift; sourceTree = "<group>"; };
 		CFE5610D20BEE4AA005AD0E5 /* GistRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GistRouter.swift; sourceTree = "<group>"; };
 		CFE5610E20BEE4AA005AD0E5 /* GitHubAPIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHubAPIManager.swift; sourceTree = "<group>"; };
+		CF850149206938C6007315FA /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		CF85014B20693B7F007315FA /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,6 +49,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CF85014C20693B7F007315FA /* SafariServices.framework in Frameworks */,
 				A359237925D85AB2A8F08EA2 /* Pods_grokSwiftREST.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -99,6 +104,7 @@
 			children = (
 				CF85010C2064367A007315FA /* MasterViewController.swift */,
 				CF85010E2064367A007315FA /* DetailViewController.swift */,
+				CF850149206938C6007315FA /* LoginViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -125,6 +131,7 @@
 		FEFD1C3CF180E926EEBFF906 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CF85014B20693B7F007315FA /* SafariServices.framework */,
 				13A7EDB3A000D9F2E020FCEB /* Pods_grokSwiftREST.framework */,
 			);
 			name = Frameworks;
@@ -227,6 +234,7 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-grokSwiftREST/Pods-grokSwiftREST-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/FLAnimatedImage/FLAnimatedImage.framework",
+				"${BUILT_PRODUCTS_DIR}/Locksmith/Locksmith.framework",
 				"${BUILT_PRODUCTS_DIR}/PINCache/PINCache.framework",
 				"${BUILT_PRODUCTS_DIR}/PINRemoteImage/PINRemoteImage.framework",
 			);
@@ -234,6 +242,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FLAnimatedImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Locksmith.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PINCache.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PINRemoteImage.framework",
 			);
@@ -251,6 +260,7 @@
 			files = (
 				CFE5610F20BEE4AB005AD0E5 /* GistRouter.swift in Sources */,
 				CFE5611020BEE4AB005AD0E5 /* GitHubAPIManager.swift in Sources */,
+				CF85014A206938C6007315FA /* LoginViewController.swift in Sources */,
 				CF85010F2064367A007315FA /* DetailViewController.swift in Sources */,
 				CF85012620643B8B007315FA /* Gist.swift in Sources */,
 				CF85010D2064367A007315FA /* MasterViewController.swift in Sources */,

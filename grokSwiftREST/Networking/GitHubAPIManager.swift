@@ -8,14 +8,37 @@
 
 import Foundation
 import Alamofire
+import Locksmith
 
 class GitHubAPIManager {
   static let shared = GitHubAPIManager()
+  var OAuthToken: String? {
+    set {
+      guard let newValue = newValue else {
+        let _ = try? Locksmith.deleteDataForUserAccount(userAccount: "github")
+        return
+      }
+      guard let _ = try? Locksmith.updateData(data: ["token": newValue],
+                                              forUserAccount: "github") else {
+                                                let _ = try? Locksmith.deleteDataForUserAccount(userAccount: "github")
+                                                return
+      }
+    }
+    get {
+      // try to load from keychain
+      let dictionary = Locksmith.loadDataForUserAccount(userAccount: "github")
+      return dictionary?["token"] as? String
+    }
+  }
+  var isLoadingOAuthToken: Bool = false
+
   let clientID: String = "1234567890"
   let clientSecret: String = "abcdefghijkl"
 
   func hasOAuthToken() -> Bool {
-    // TODO: implement
+    if let token = self.OAuthToken {
+      return !token.isEmpty
+    }
     return false
   }
 
@@ -25,6 +48,97 @@ class GitHubAPIManager {
     let authPath: String = "https://github.com/login/oauth/authorize" +
     "?client_id=\(clientID)&scope=gist&state=TEST_STATE"
     return URL(string: authPath)
+  }
+
+  func processOAuthStep1Response(_ url: URL) {
+    // extract the code from the URL
+    guard let code = extractCodeFromOAuthStep1Response(url) else {
+      isLoadingOAuthToken = false
+      return
+    }
+    swapAuthCodeForToken(code: code)
+  }
+
+  func extractCodeFromOAuthStep1Response(_ url: URL) -> String? {
+    let components = URLComponents(url: url, resolvingAgainstBaseURL: false)
+    var code: String?
+    guard let queryItems = components?.queryItems else {
+      isLoadingOAuthToken = false
+      return nil
+    }
+    for queryItem in queryItems {
+      if (queryItem.name.lowercased() == "code") {
+        code = queryItem.value
+        break
+      }
+    }
+    return code
+  }
+
+  func swapAuthCodeForToken(code: String) {
+    let getTokenPath: String = "https://github.com/login/oauth/access_token"
+    let tokenParams = ["client_id": clientID, "client_secret": clientSecret,
+                       "code": code]
+    let jsonHeader = ["Accept": "application/json"]
+    Alamofire.request(getTokenPath, method: .post, parameters: tokenParams,
+                      encoding: URLEncoding.default, headers: jsonHeader)
+      .responseJSON { response in
+        guard response.result.error == nil else {
+          print(response.result.error!)
+          self.isLoadingOAuthToken = false
+          return
+        }
+        guard let value = response.result.value else {
+          print("no string received in response when swapping oauth code for token")
+          self.isLoadingOAuthToken = false
+          return
+        }
+        guard let jsonResult = value as? [String: String] else {
+          print("no data received or data not JSON")
+          self.isLoadingOAuthToken = false
+          return
+        }
+
+        self.OAuthToken = self.parseOAuthTokenResponse(jsonResult)
+        self.isLoadingOAuthToken = false
+        guard self.hasOAuthToken() else {
+          return
+        }
+        // TEST: use token to fetch starred gists
+        self.printMyStarredGistsWithOAuth2()
+    }
+  }
+
+  func parseOAuthTokenResponse(_ json: [String: String]) -> String? {
+    var token: String?
+    for (key, value) in json {
+      switch key {
+      case "access_token":
+        token = value
+      case "scope":
+        // TODO: verify scope
+        print("SET SCOPE")
+      case "token_type":
+        // TODO: verify is bearer
+        print("CHECK IF BEARER")
+      default:
+        print("got more than I expected from the OAuth token exchange")
+        print(key)
+      }
+    }
+    return token
+  }
+
+  // MARK: - OAuth 2.0
+  func printMyStarredGistsWithOAuth2() {
+    Alamofire.request(GistRouter.getMyStarred())
+      .responseString { response in
+        guard let receivedString = response.result.value else {
+          print(response.result.error!)
+          return
+        }
+        print(receivedString)
+    }
   }
 
   func clearCache() {
@@ -72,6 +186,15 @@ class GitHubAPIManager {
       self.fetchGists(GistRouter.getAtPath(urlString), completionHandler: completionHandler)
     } else {
       self.fetchGists(GistRouter.getPublic(), completionHandler: completionHandler)
+    }
+  }
+
+  func fetchMyStarredGists(pageToLoad: String?,
+                           completionHandler: @escaping (Result<[Gist]>, String?) -> Void) {
+    if let urlString = pageToLoad {
+      fetchGists(GistRouter.getAtPath(urlString), completionHandler: completionHandler)
+    } else {
+      fetchGists(GistRouter.getMyStarred(), completionHandler: completionHandler)
     }
   }
 

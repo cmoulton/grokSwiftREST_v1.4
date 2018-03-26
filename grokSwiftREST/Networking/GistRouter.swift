@@ -47,6 +47,11 @@ enum GistRouter: URLRequestConvertible {
     var urlRequest = URLRequest(url: url)
     urlRequest.httpMethod = method.rawValue
 
+    // Set OAuth token if we have one
+    if let token = GitHubAPIManager.shared.OAuthToken {
+      urlRequest.setValue("token \(token)", forHTTPHeaderField: "Authorization")
+    }
+
     return urlRequest
   }
 }
