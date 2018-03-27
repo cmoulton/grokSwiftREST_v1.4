@@ -23,6 +23,7 @@
 		CF85014C20693B7F007315FA /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF85014B20693B7F007315FA /* SafariServices.framework */; };
 		CF85014E2069947E007315FA /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF85014D2069947E007315FA /* File.swift */; };
 		CF850150206A9B3E007315FA /* CreateGistViewControlle.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF85014F206A9B3E007315FA /* CreateGistViewControlle.swift */; };
+		CF850152206ABE76007315FA /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF850151206ABE76007315FA /* PersistenceManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,7 @@
 		CF85014B20693B7F007315FA /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
 		CF85014D2069947E007315FA /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		CF85014F206A9B3E007315FA /* CreateGistViewControlle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGistViewControlle.swift; sourceTree = "<group>"; };
+		CF850151206ABE76007315FA /* PersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +98,7 @@
 				CF85012420643B80007315FA /* Models */,
 				CF85011E20643A6F007315FA /* View Controllers */,
 				CF8501102064367A007315FA /* Main.storyboard */,
+				CF850151206ABE76007315FA /* PersistenceManager.swift */,
 				CF8501132064367A007315FA /* Assets.xcassets */,
 				CF8501152064367A007315FA /* LaunchScreen.storyboard */,
 				CF8501182064367A007315FA /* Info.plist */,
@@ -273,6 +276,7 @@
 				CF85014A206938C6007315FA /* LoginViewController.swift in Sources */,
 				CF85010F2064367A007315FA /* DetailViewController.swift in Sources */,
 				CF850150206A9B3E007315FA /* CreateGistViewControlle.swift in Sources */,
+				CF850152206ABE76007315FA /* PersistenceManager.swift in Sources */,
 				CF85012020643A7F007315FA /* GitHubAPIManager.swift in Sources */,
 				CF85012620643B8B007315FA /* Gist.swift in Sources */,
 				CF85010D2064367A007315FA /* MasterViewController.swift in Sources */,

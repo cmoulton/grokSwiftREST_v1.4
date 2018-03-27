@@ -190,6 +190,12 @@ class MasterViewController: UITableViewController, LoginViewDelegate, SFSafariVi
         }
 
         self.gists += fetchedGists
+        let path: PersistenceManager.Path =
+          [.Public, .Starred, .MyGists][self.gistSegmentedControl.selectedSegmentIndex]
+        let success = PersistenceManager.save(self.gists, path: path)
+        if !success {
+          self.showOfflineSaveFailedBanner()
+        }
       }
 
       // update "last updated" title for refresh control
@@ -214,6 +220,19 @@ class MasterViewController: UITableViewController, LoginViewDelegate, SFSafariVi
       print("got an index that I didn't expect for selectedSegmentIndex")
     }
   }
+
+  func showOfflineSaveFailedBanner() {
+    if let existingBanner = self.errorBanner {
+      existingBanner.dismiss()
+    }
+    self.errorBanner = Banner(title: "Could not save gists to view offline",
+                              subtitle: "Your iOS device is almost out of free space.\n" +
+      "You will only be able to see gists when you have an internet connection.",
+                              image: nil,
+                              backgroundColor: UIColor.orange)
+    self.errorBanner?.dismissesOnSwipe = true
+    self.errorBanner?.show(duration: nil)
+  }
   
   func handleLoadGistsError(_ error: Error) {
     print(error)
@@ -231,6 +250,14 @@ class MasterViewController: UITableViewController, LoginViewDelegate, SFSafariVi
       }
       // check the code:
       if innerError.code == NSURLErrorNotConnectedToInternet {
+        let path: PersistenceManager.Path =
+          [.Public, .Starred, .MyGists][self.gistSegmentedControl.selectedSegmentIndex]
+        if let archived: [Gist] = PersistenceManager.load(path: path) {
+          self.gists = archived
+        } else {
+          self.gists = [] // don't have any saved gists
+        }
+        self.tableView.reloadData()
         showNotConnectedBanner()
         return
       }
