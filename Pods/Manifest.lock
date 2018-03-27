@@ -1,5 +1,6 @@
 PODS:
   - Alamofire (4.7.0)
+  - BRYXBanner (0.8.0)
   - FLAnimatedImage (1.0.12)
   - Locksmith (4.0.0)
   - PINCache (2.3)
@@ -14,6 +15,7 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire (~> 4.7)
+  - BRYXBanner (~> 0.8)
   - Locksmith (~> 4.0)
   - PINRemoteImage (~> 2.1)
   - XLForm (~> 4.0)
@@ -29,12 +31,13 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Alamofire: 907e0a98eb68cdb7f9d1f541a563d6ac5dc77b25
+  BRYXBanner: 406c3775789136531da6f3c98058be2f16e08a34
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   Locksmith: e9bebbaaa4cee3c511bc358a44f843c3fe00e21f
   PINCache: ce36ed282031b92fc7733ffe831f474ff80fddc2
   PINRemoteImage: 4ac4011c5caefd6befd99758e09becede05d3226
   XLForm: 04110197c12187dd28a6c7295d3d8b95f4fdb4de
 
-PODFILE CHECKSUM: e3f253b1c128a5a874c31a38213e886af431ac0f
+PODFILE CHECKSUM: cb13e47c4a78bbaa49b6c10d36a67e78c264eaae
 
 COCOAPODS: 1.5.2

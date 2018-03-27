@@ -8,4 +8,5 @@ target 'grokSwiftREST' do
   pod 'PINRemoteImage', '~> 2.1'
   pod 'Locksmith', '~> 4.0'
   pod 'XLForm', '~> 4.0'
+  pod 'BRYXBanner', '~> 0.8'
 end
