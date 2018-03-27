@@ -310,4 +310,20 @@ class GitHubAPIManager {
         completionHandler(response.error)
     }
   }
+
+  func deleteGist(_ gistId: String, completionHandler: @escaping (Error?) -> Void) {
+    Alamofire.request(GistRouter.delete(gistId))
+      .responseData { response in
+        if let urlResponse = response.response,
+          let authError = self.checkUnauthorized(urlResponse: urlResponse) {
+          completionHandler(authError)
+          return
+        }
+
+        if let error = response.error {
+          print(error)
+        }
+        completionHandler(response.error)
+    }
+  }
 }
