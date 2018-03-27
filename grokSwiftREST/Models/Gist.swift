@@ -19,12 +19,24 @@ struct Gist: Codable {
     }
   }
 
+  init(gistDescription: String, files: [String: File], isPublic: Bool) {
+    self.gistDescription = gistDescription
+    self.files = files
+    self.isPublic = isPublic
+    
+    self.id = nil
+    self.url = nil
+    self.owner = nil
+    self.createdAt = nil
+    self.updatedAt = nil
+  }
+
   var id: String?
   var gistDescription: String?
   var url: URL?
   var owner: Owner?
-  let createdAt: Date
-  let updatedAt: Date
+  let createdAt: Date?
+  let updatedAt: Date?
   let files: [String: File] // JSON does filename: { file data }
   let isPublic: Bool
   lazy var orderedFiles: [(name: String, details: File)] = {

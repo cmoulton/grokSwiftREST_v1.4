@@ -25,8 +25,6 @@ class MasterViewController: UITableViewController, LoginViewDelegate, SFSafariVi
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(insertNewObject(_:)))
-    navigationItem.rightBarButtonItem = addButton
     if let split = splitViewController {
       let controllers = split.viewControllers
       detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
@@ -63,6 +61,10 @@ class MasterViewController: UITableViewController, LoginViewDelegate, SFSafariVi
     // only show add button for my gists
     if (gistSegmentedControl.selectedSegmentIndex == 2) {
       self.navigationItem.leftBarButtonItem = self.editButtonItem
+      let addButton = UIBarButtonItem(barButtonSystemItem: .add,
+                                      target: self,
+                                      action: #selector(insertNewObject(_:)))
+      self.navigationItem.rightBarButtonItem = addButton
     } else {
       self.navigationItem.leftBarButtonItem = nil
     }
@@ -197,13 +199,8 @@ class MasterViewController: UITableViewController, LoginViewDelegate, SFSafariVi
   
   @objc
   func insertNewObject(_ sender: Any) {
-    let alert = UIAlertController(title: "Not Implemented",
-                                  message: "Can't create new gists yet, will implement later",
-                                  preferredStyle: .alert)
-    alert.addAction(UIAlertAction(title: "OK",
-                                  style: .default,
-                                  handler: nil))
-    self.present(alert, animated: true, completion: nil)
+    let createVC = CreateGistViewController(nibName: nil, bundle: nil)
+    self.navigationController?.pushViewController(createVC, animated: true)
   }
   
   // MARK: - Segues
