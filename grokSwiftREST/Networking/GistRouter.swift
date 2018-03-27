@@ -20,6 +20,7 @@ enum GistRouter: URLRequestConvertible {
   case star(String)
   case unstar(String)
   case delete(String)
+  case create(Data)
 
   func asURLRequest() throws -> URLRequest {
     var method: HTTPMethod {
@@ -30,6 +31,8 @@ enum GistRouter: URLRequestConvertible {
         return .put
       case .unstar, .delete:
         return .delete
+      case .create:
+        return .post
       }
     }
 
@@ -53,11 +56,22 @@ enum GistRouter: URLRequestConvertible {
         relativePath = "gists/\(id)/star"
       case .delete(let id):
         relativePath = "gists/\(id)"
+      case .create:
+        relativePath = "gists"
       }
 
       var url = URL(string: GistRouter.baseURLString)!
       url.appendPathComponent(relativePath)
       return url
+    }()
+
+    let body: Data? = {
+      switch self {
+      case .create(let jsonAsData):
+        return jsonAsData
+      default:
+        return nil
+      }
     }()
 
     // for now, ignore params
@@ -69,6 +83,8 @@ enum GistRouter: URLRequestConvertible {
     if let token = GitHubAPIManager.shared.OAuthToken {
       urlRequest.setValue("token \(token)", forHTTPHeaderField: "Authorization")
     }
+
+    urlRequest.httpBody = body
 
     return urlRequest
   }

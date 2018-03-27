@@ -14,6 +14,6 @@ struct File: Codable {
     case content
   }
 
-  let url: URL
+  let url: URL?
   let content: String?
 }

@@ -15,6 +15,7 @@ enum BackendError: Error {
   case apiProvidedError(reason: String)
   case authCouldNot(reason: String)
   case authLost(reason: String)
+  case missingRequiredInput(reason: String)
 }
 
 struct APIProvidedError: Codable {

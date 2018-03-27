@@ -26,6 +26,7 @@ struct Gist: Codable {
   let createdAt: Date
   let updatedAt: Date
   let files: [String: File] // JSON does filename: { file data }
+  let isPublic: Bool
   lazy var orderedFiles: [(name: String, details: File)] = {
     var orderedFiles: [(name: String, details: File)] = []
     for (key, value) in files {
@@ -43,6 +44,7 @@ struct Gist: Codable {
     case createdAt = "created_at"
     case updatedAt = "updated_at"
     case files
+    case isPublic = "public"
   }
 }
 
