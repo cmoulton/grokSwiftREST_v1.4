@@ -257,4 +257,57 @@ class GitHubAPIManager {
     }
     return nil
   }
+
+  // MARK: Starring / Unstarring / Star status
+  func isGistStarred(_ gistId: String, completionHandler: @escaping (Result<Bool>) -> Void) {
+    Alamofire.request(GistRouter.isStarred(gistId))
+      .validate(statusCode: [204])
+      .responseData { response in
+        if let urlResponse = response.response,
+          let authError = self.checkUnauthorized(urlResponse: urlResponse) {
+          completionHandler(.failure(authError))
+          return
+        }
+        // 204 if starred, 404 if not
+        if let error = response.error {
+          if response.response?.statusCode == 404 {
+            completionHandler(.success(false))
+            return
+          }
+          completionHandler(.failure(error))
+          return
+        }
+        completionHandler(.success(true))
+    }
+  }
+
+  func starGist(_ gistId: String, completionHandler: @escaping (Error?) -> Void) {
+    Alamofire.request(GistRouter.star(gistId))
+      .responseData { response in
+        if let urlResponse = response.response,
+          let authError = self.checkUnauthorized(urlResponse: urlResponse) {
+          completionHandler(authError)
+          return
+        }
+        if let error = response.error {
+          print(error)
+        }
+        completionHandler(response.error)
+    }
+  }
+
+  func unstarGist(_ gistId: String, completionHandler: @escaping (Error?) -> Void) {
+    Alamofire.request(GistRouter.unstar(gistId))
+      .responseData { response in
+        if let urlResponse = response.response,
+          let authError = self.checkUnauthorized(urlResponse: urlResponse) {
+          completionHandler(authError)
+          return
+        }
+        if let error = response.error {
+          print(error)
+        }
+        completionHandler(response.error)
+    }
+  }
 }
