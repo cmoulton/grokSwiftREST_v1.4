@@ -8,6 +8,7 @@
 
 import UIKit
 import SafariServices
+import BRYXBanner
 
 class DetailViewController: UIViewController,
   UITableViewDataSource,
@@ -15,6 +16,7 @@ class DetailViewController: UIViewController,
   @IBOutlet weak var tableView: UITableView!
   var isStarred: Bool?
   var alertController: UIAlertController?
+  var errorBanner: Banner?
 
   func configureView() {
     if let _ = self.gist {
@@ -31,9 +33,11 @@ class DetailViewController: UIViewController,
     configureView()
   }
 
-  override func didReceiveMemoryWarning() {
-    super.didReceiveMemoryWarning()
-    // Dispose of any resources that can be recreated.
+  override func viewWillDisappear(_ animated: Bool) {
+    if let existingBanner = self.errorBanner {
+      existingBanner.dismiss()
+    }
+    super.viewWillDisappear(animated)
   }
 
   var gist: Gist? {
@@ -134,6 +138,16 @@ class DetailViewController: UIViewController,
           self.alertController?.addAction(okAction)
           self.present(self.alertController!, animated: true, completion: nil)
           return
+        case BackendError.network(let innerError as NSError):
+          if innerError.domain != NSURLErrorDomain {
+            return
+          }
+          if innerError.code == NSURLErrorNotConnectedToInternet {
+            self.showNotConnectedBanner(title: "Could not get starred status",
+                                        message: "Sorry, couldn't find out whether you starred this gist. "
+                                          + "Maybe GitHub is down or you don't have an internet connection.")
+          }
+          return
         default:
           return
         }
@@ -144,6 +158,16 @@ class DetailViewController: UIViewController,
                                    with: .automatic)
       }
     }
+  }
+
+  func showNotConnectedBanner(title: String, message: String) {
+    // show not connected error & tell em to try again when they do have a connection
+    self.errorBanner = Banner(title: title,
+                              subtitle: message,
+                              image: nil,
+                              backgroundColor: UIColor.orange)
+    self.errorBanner?.dismissesOnSwipe = true
+    self.errorBanner?.show(duration: nil)
   }
 
   func starThisGist() {

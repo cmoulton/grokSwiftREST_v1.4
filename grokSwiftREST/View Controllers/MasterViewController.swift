@@ -10,6 +10,7 @@ import UIKit
 import PINRemoteImage
 import SafariServices
 import Alamofire
+import BRYXBanner
 
 class MasterViewController: UITableViewController, LoginViewDelegate, SFSafariViewControllerDelegate {
   
@@ -19,6 +20,7 @@ class MasterViewController: UITableViewController, LoginViewDelegate, SFSafariVi
   var isLoading = false
   var dateFormatter = DateFormatter()
   var safariViewController: SFSafariViewController?
+  var errorBanner: Banner?
 
   @IBOutlet weak var gistSegmentedControl: UISegmentedControl!
   
@@ -54,6 +56,13 @@ class MasterViewController: UITableViewController, LoginViewDelegate, SFSafariVi
     }
   }
 
+  override func viewWillDisappear(_ animated: Bool) {
+    if let existingBanner = self.errorBanner {
+      existingBanner.dismiss()
+    }
+    super.viewWillDisappear(animated)
+  }
+
   @IBAction func segmentedControlValueChanged(sender: UISegmentedControl) {
     gists = []
     tableView.reloadData()
@@ -78,7 +87,18 @@ class MasterViewController: UITableViewController, LoginViewDelegate, SFSafariVi
       guard error == nil else {
         print(error!)
         self.isLoading = false
-        // TODO: handle error
+        switch error! {
+        case BackendError.network(let innerError as NSError):
+          if innerError.domain != NSURLErrorDomain {
+            break
+          }
+          if innerError.code == NSURLErrorNotConnectedToInternet {
+            self.showNotConnectedBanner()
+            return
+          }
+        default:
+          break
+        }
         // Something went wrong, try again
         self.showOAuthLoginView()
         return
@@ -130,6 +150,18 @@ class MasterViewController: UITableViewController, LoginViewDelegate, SFSafariVi
     // Detect not being able to load the OAuth URL
     if (!didLoadSuccessfully) {
       controller.dismiss(animated: true, completion: nil)
+      GitHubAPIManager.shared.isAPIOnline { isOnline in
+        if !isOnline {
+          print("error: api offline")
+          let innerError = NSError(domain: NSURLErrorDomain,
+                                   code: NSURLErrorNotConnectedToInternet,
+                                   userInfo: [NSLocalizedDescriptionKey:
+                                    "No Internet Connection or GitHub is Offline",
+                                              NSLocalizedRecoverySuggestionErrorKey: "Please retry your request"])
+          let error = BackendError.network(error: innerError)
+          GitHubAPIManager.shared.OAuthTokenCompletionHandler?(error)
+        }
+      }
     }
   }
   
@@ -192,9 +224,34 @@ class MasterViewController: UITableViewController, LoginViewDelegate, SFSafariVi
     case BackendError.authLost:
       self.showOAuthLoginView()
       return
+    case BackendError.network(let innerError as NSError):
+      // check the domain
+      if innerError.domain != NSURLErrorDomain {
+        break
+      }
+      // check the code:
+      if innerError.code == NSURLErrorNotConnectedToInternet {
+        showNotConnectedBanner()
+        return
+      }
     default:
       break
     }
+  }
+
+  func showNotConnectedBanner() {
+    // check for existing banner
+    if let existingBanner = self.errorBanner {
+      existingBanner.dismiss()
+    }
+    // show not connected error & tell em to try again when they do have a connection
+    self.errorBanner = Banner(title: "No Internet Connection",
+                              subtitle: "Could not load gists." +
+      " Try again when you're connected to the internet",
+                              image: nil,
+                              backgroundColor: .red)
+    self.errorBanner?.dismissesOnSwipe = true
+    self.errorBanner?.show(duration: nil)
   }
   
   @objc
@@ -296,8 +353,6 @@ class MasterViewController: UITableViewController, LoginViewDelegate, SFSafariVi
           }
         }
       }
-    } else if editingStyle == .insert {
-      // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
     }
   }
 
