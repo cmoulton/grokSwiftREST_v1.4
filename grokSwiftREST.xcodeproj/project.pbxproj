@@ -17,13 +17,13 @@
 		CF85012620643B8B007315FA /* Gist.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF85012520643B8B007315FA /* Gist.swift */; };
 		CF850128206442AD007315FA /* JSONEncoder+EncodeResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF850127206442AD007315FA /* JSONEncoder+EncodeResponse.swift */; };
 		CF85012A2064433B007315FA /* BackendError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8501292064433B007315FA /* BackendError.swift */; };
-		CFE5610F20BEE4AB005AD0E5 /* GistRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFE5610D20BEE4AA005AD0E5 /* GistRouter.swift */; };
-		CFE5611020BEE4AB005AD0E5 /* GitHubAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFE5610E20BEE4AA005AD0E5 /* GitHubAPIManager.swift */; };
 		CF85014A206938C6007315FA /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF850149206938C6007315FA /* LoginViewController.swift */; };
 		CF85014C20693B7F007315FA /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF85014B20693B7F007315FA /* SafariServices.framework */; };
 		CF85014E2069947E007315FA /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF85014D2069947E007315FA /* File.swift */; };
 		CF850150206A9B3E007315FA /* CreateGistViewControlle.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF85014F206A9B3E007315FA /* CreateGistViewControlle.swift */; };
 		CF850152206ABE76007315FA /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF850151206ABE76007315FA /* PersistenceManager.swift */; };
+		CFE5610F20BEE4AB005AD0E5 /* GistRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFE5610D20BEE4AA005AD0E5 /* GistRouter.swift */; };
+		CFE5611020BEE4AB005AD0E5 /* GitHubAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFE5610E20BEE4AA005AD0E5 /* GitHubAPIManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,13 +41,13 @@
 		CF85012520643B8B007315FA /* Gist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gist.swift; sourceTree = "<group>"; };
 		CF850127206442AD007315FA /* JSONEncoder+EncodeResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JSONEncoder+EncodeResponse.swift"; sourceTree = "<group>"; };
 		CF8501292064433B007315FA /* BackendError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackendError.swift; sourceTree = "<group>"; };
-		CFE5610D20BEE4AA005AD0E5 /* GistRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GistRouter.swift; sourceTree = "<group>"; };
-		CFE5610E20BEE4AA005AD0E5 /* GitHubAPIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHubAPIManager.swift; sourceTree = "<group>"; };
 		CF850149206938C6007315FA /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		CF85014B20693B7F007315FA /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
 		CF85014D2069947E007315FA /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		CF85014F206A9B3E007315FA /* CreateGistViewControlle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGistViewControlle.swift; sourceTree = "<group>"; };
 		CF850151206ABE76007315FA /* PersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
+		CFE5610D20BEE4AA005AD0E5 /* GistRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GistRouter.swift; sourceTree = "<group>"; };
+		CFE5610E20BEE4AA005AD0E5 /* GitHubAPIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHubAPIManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -277,11 +277,9 @@
 				CF85010F2064367A007315FA /* DetailViewController.swift in Sources */,
 				CF850150206A9B3E007315FA /* CreateGistViewControlle.swift in Sources */,
 				CF850152206ABE76007315FA /* PersistenceManager.swift in Sources */,
-				CF85012020643A7F007315FA /* GitHubAPIManager.swift in Sources */,
 				CF85012620643B8B007315FA /* Gist.swift in Sources */,
 				CF85010D2064367A007315FA /* MasterViewController.swift in Sources */,
 				CF85014E2069947E007315FA /* File.swift in Sources */,
-				CF85012320643AF7007315FA /* GistRouter.swift in Sources */,
 				CF850128206442AD007315FA /* JSONEncoder+EncodeResponse.swift in Sources */,
 				CF85010B2064367A007315FA /* AppDelegate.swift in Sources */,
 				CF85012A2064433B007315FA /* BackendError.swift in Sources */,
