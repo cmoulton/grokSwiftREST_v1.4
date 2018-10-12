@@ -351,7 +351,7 @@ class MasterViewController: UITableViewController, LoginViewDelegate, SFSafariVi
     return gistSegmentedControl.selectedSegmentIndex == 2
   }
   
-  override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+  override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
     if editingStyle == .delete {
       let gistToDelete = gists[indexPath.row]
       // remove from array of gists
